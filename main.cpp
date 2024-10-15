@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <Windows.h>
 #include <random>
+#include <functional>
 
 // 関数ポインタ
 typedef void (*PFunc)(int*);
@@ -24,7 +25,7 @@ int random() {
 	std::mt19937 gen(rd());
 
 	// int型の数字を1~6の間でランダムに生成
-	std::uniform_real_distribution<> dist(1, 6);	
+	std::uniform_real_distribution<> dist(1, 6);
 
 	return dist(gen);
 }
@@ -34,7 +35,7 @@ int random() {
 /// </summary>
 /// <param name="p"></param>
 /// <param name="second"></param>
-void setTimeout(PFunc p, int second,int dice) {
+void setTimeout(PFunc p, int second, int dice) {
 
 	// 時間経過の処理
 	Sleep(second * 1000);
@@ -54,6 +55,9 @@ int main() {
 	// ランダムにサイコロの目を抽選
 	int dice = random();
 
+	// 入力された値をキャプチャーする関数
+
+
 	// 相手に奇数か偶数か答えてもらう
 	char answer[10];
 	printf("奇数か偶数かを答えてください :  ");
@@ -68,21 +72,30 @@ int main() {
 	// 2で割って余りが1(奇数)ならtrue, 0(偶数)ならfalse
 	bool judge = (dice % 2 != 0);
 
-	// サイコロの目が奇数で回答も奇数なら
-	if (judge && strcmp(answer, "奇数") == 0) {
+	// 判定処理をstd::functionを用いてラムダ式内でanswerとjudgeをキャプチャする
+	std::function<void()> result = [answer, judge]() {
 
-		printf("正解!奇数だよ!\n");
+		// サイコロの目が奇数で回答も奇数なら
+		if (judge && strcmp(answer, "奇数") == 0) {
 
-	// サイコロの目が偶数で回答も偶数なら
-	} else if (!judge && strcmp(answer, "偶数") == 0) {
+			printf("正解!奇数だよ!\n");
 
-		printf("正解!偶数だよ!\n");
+			// サイコロの目が偶数で回答も偶数なら
+		}
+		else if (!judge && strcmp(answer, "偶数") == 0) {
 
-	// サイコロの目と回答があっていなければ
-	} else {
+			printf("正解!偶数だよ!\n");
 
-		printf("残念。不正解だよ。\n");
-	}
+			// サイコロの目と回答があっていなければ
+		}
+		else {
+
+			printf("残念。不正解だよ。\n");
+		}
+	};
+
+	// 判定結果を実行
+	result();
 
 	return 0;
 }

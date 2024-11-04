@@ -1,5 +1,6 @@
 #include "Math.h"
-#include <cstdio>
+#include <iostream>
+#include <format>
 
 int main() {
 
@@ -11,13 +12,13 @@ int main() {
 	Math<int, double> m5(9, 6.2);
 	Math<float, double> m6(3.9f, 4.2);
 
-	printf("%d\n", m1.Min());
-	printf("%.1f\n", m2.Min());
-	printf("%.1f\n", m3.Min());
+	std::cout << std::format("{}\n", m1.Min());
+	std::cout << std::format("{}\n", m2.Min());
+	std::cout << std::format("{}\n", m3.Min());
 
-	printf("%.1f\n", m4.Min());
-	printf("%.1f\n", m5.Min());
-	printf("%.1f\n", m6.Min());
+	std::cout << std::format("{}\n", m4.Min());
+	std::cout << std::format("{}\n", m5.Min());
+	std::cout << std::format("{}\n", m6.Min());
 
 	return 0;
 }

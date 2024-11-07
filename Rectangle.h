@@ -36,4 +36,7 @@ private:
 
 	// 高さ
 	float height_;
+
+	// 面積
+	float area_;
 };

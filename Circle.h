@@ -32,4 +32,7 @@ private:
 
 	// 半径
 	float radius_;
+
+	// 面積
+	float area_;
 };
